@@ -46,6 +46,7 @@ function fetch_data() {
 			var city = getPlainName(reply[i]);
 		//	flickr.fetch(city, http, client);
 		//	twitter.fetch(city)
+
 		bandsInTown.fetch(city,http,client);
 		}
 

@@ -1,7 +1,9 @@
 var express = require('express'),
 http = require('http'),
 path = require('path'),
-amqp = require('amqp');
+amqp = require('amqplib');
+
+var rabbitMQ = 'ampq://localhost';
 
 var app = express();
   app.set('port', process.env.PORT || 3000);
@@ -20,13 +22,27 @@ http.createServer(app).listen(app.get('port'), function() {
 
 app.get('/:city', function(req,res) {
 	connectMQ(res);
-	console.log(req.query.city);
+	res.end("query for: " + req.params.city);
 });
 
 
-function connectMQ(res) {
-	app.rabbitMqConnection = amqp.createConnection({ host: rabbitMQ });
-	app.rabbitMqConnection.on('ready', function(){
-	app.connectionStatus = 'Connected!';
-	
-}) };
+function connectMQ(city) { 
+amqp.connect(rabbitMQ).then(function(conn) {
+  process.once('SIGINT', function() { conn.close(); });
+  return conn.createChannel().then(function(ch) {
+    
+    var ok = ch.assertQueue('hello', {durable: false});
+    
+    ok = ok.then(function(_qok) {
+      return ch.consume(city, function(msg) {
+        console.log(" [x] Received '%s'", msg.content.toString());
+      }, {noAck: true});
+    });
+    
+    return ok.then(function(_consumeOk) {
+      console.log(' [*] Waiting for messages. To exit press CTRL+C');
+    });
+  });
+}).then(null, console.warn);
+
+}

@@ -4,7 +4,7 @@ var io = require("socket.io")();
 var path = require('path');
 var flickr = require('../feeds/flickr');
 var twitter = require('../feeds/twitter');
-
+var bandsInTown = require('../feeds/bandsInTown');
 
 
 var redis = require("redis"),
@@ -18,13 +18,9 @@ app.set('port', process.env.PORT || 3000);
 
 server = http.Server(app);
 server.listen(app.get('port'), function() {
-
-
-var minutes = 1, the_interval = minutes * 60 * 1000;
-
-fetch_data();
-setInterval(fetch_data, the_interval);
-
+	var minutes = 1, the_interval = minutes * 60 * 1000;
+	fetch_data();
+	setInterval(fetch_data, the_interval);
 });
 
 app.get('/:city', function(req,res) {
@@ -44,15 +40,13 @@ app.get('/:city', function(req,res) {
 		
 });
 
-
-
 function fetch_data() {
-
 	client.keys('city-*', function(err, reply) {
 		for(i = 0; i < reply.length; i++) {
 			var city = getPlainName(reply[i]);
-			flickr.fetch(city, http, client);
-			twitter.fetch(city);
+		//	flickr.fetch(city, http, client);
+		//	twitter.fetch(city)
+		bandsInTown.fetch(city,http,client);
 		}
 
 	});

@@ -11,6 +11,7 @@ function cleaner(data) {
 }
 
 exports.fetch = function (city, http, redis) {
+
 	http.get("http://api.flickr.com/services/feeds/photos_public.gne?format=json", function(res) {
 		console.log('STATUS: ' + res.statusCode);
 		console.log('HEADERS: ' + JSON.stringify(res.headers));
@@ -20,11 +21,16 @@ exports.fetch = function (city, http, redis) {
 			body += chunk;
 		});
 		res.on('end', function() {
-			data = JSON.parse(body.substring(15, body.length - 1))['items'];
-			for (i = 0; i < data.length; i++) {
-				cleaned = cleaner(data[i]);
-				console.log(cleaned, moment(cleaned['time']));
+			try {
+				data = JSON.parse(body.substring(15, body.length - 1))['items'];
+				for (i = 0; i < data.length; i++) {
+					cleaned = cleaner(data[i]);
+					console.log(cleaned, moment(cleaned['time']));
+				}
+			} catch (e) {
+				console.log("Flickr Error: " +e);
 			}
 		})
 	}).end();
+
 }

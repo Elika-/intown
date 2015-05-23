@@ -3,14 +3,13 @@ http = require('http'),
 path = require('path'),
 amqp = require('amqplib');
 
-var rabbitMQ = 'ampq://localhost';
+var rabbitMQ = 'amqp://localhost';
 
 var app = express();
   app.set('port', process.env.PORT || 3000);
   app.use(express.static(path.join(__dirname, 'public')));
 
 
-var rabbitMQ = 'localhost'
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log("test");
@@ -21,7 +20,7 @@ http.createServer(app).listen(app.get('port'), function() {
 
 
 app.get('/:city', function(req,res) {
-	connectMQ(res);
+	connectMQ(req.params.city);
 	res.end("query for: " + req.params.city);
 });
 
@@ -31,7 +30,7 @@ amqp.connect(rabbitMQ).then(function(conn) {
   process.once('SIGINT', function() { conn.close(); });
   return conn.createChannel().then(function(ch) {
     
-    var ok = ch.assertQueue('hello', {durable: false});
+    var ok = ch.assertQueue(city, {durable: false});
     
     ok = ok.then(function(_qok) {
       return ch.consume(city, function(msg) {

@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 exports.fetch = function(city, http, redis) {
 	http.get('http://api.bandsintown.com/events/on_sale_soon.json?location='+city+'&app_id=YOUR_APP_ID231' , function(res) {
 		body = '';
@@ -8,7 +10,13 @@ exports.fetch = function(city, http, redis) {
 			try {
 				var json = JSON.parse(body);
 				for(i = 0; i < body.length; i++) {
-					console.log(translate(json[i]));
+					var data = translate(json[i]);
+					var score = moment(data.time).unix();
+					redis.zadd(["data-"+city, score, JSON.stringify(data)], function(err ,res) {
+						console.log("BID " + res);
+					});
+
+
 				}
 			 } catch (e) {
 					console.log("BandsInTown Error: " +e);

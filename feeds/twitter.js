@@ -1,4 +1,5 @@
 var Twitter = require('twitter-node-client').Twitter;
+var moment = require('moment');
     //Get this data from your twitter apps dashboard
     var config = {
         "consumerKey": "cMWS2TdDswyMV3v1PhPx0I5vB",
@@ -13,16 +14,25 @@ var error = function (err, response, body) {
 	console.log('ERROR [%s]', err);
 };
 
-var success = function (data) {
-	var parsed = JSON.parse(data);
-	console.log(parsed.statuses.length);
 
-for(i = 0; i < parsed.statuses.length; i++) {
-		console.log(translate(parsed.statuses[i]));
-	}
- };
 
 exports.fetch = function(city, redis) {
+	var success = function (data) {
+	var parsed = JSON.parse(data);
+	console.log("twitter fetch");
+	for(i = 0; i < parsed.statuses.length; i++) {
+			var data = translate(parsed.statuses[i]);
+			var score = moment(data.time).unix();	
+
+			redis.zadd(["data-"+city, score, JSON.stringify(data)], function(err ,res) {
+				if(err != null) {
+					console.log("err " + err);
+				}
+				console.log("added:" + res);
+			});
+
+		}
+	 };
     twitter.getSearch({'q':city,'count': 10}, error, success);
 }
 

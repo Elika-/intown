@@ -17,8 +17,11 @@
   function bla(data) {
     var res = "";
     var obj = JSON.parse(data);
-    for(i  = 0; i < obj.length; i++) {
-      res += "\n\n" + obj[i];
+    for(i  = 0; i < 1; i++) {
+console.log(obj[i]);
+      res += 
+      "<div>"+obj+"</div>";
+
     }
     return res;
   }

@@ -31,15 +31,22 @@ app.get('/', function(req, res) {
 app.get('/:city', function(req,res) {
 	var queryCity = req.params.city;
 	fetch_single(queryCity);
-	var resp =""
 	client.zrange(["data-"+queryCity, 0, -1], function(err, reply) {
-		for(i = 1; i < reply.length; i++) {
-			resp += reply[i];
+		var response = [];
+		seen = 0;
+		for(i = 0; i < reply.length; i++) {
+			response.push(JSON.parse(reply[i]));
+			console.log("----->");
+			console.log(JSON.parse(reply[i]));
+			seen++;
+			if(seen === reply.length-1) {
+				res.end(JSON.stringify(response));
 
+			}
 		}
-		res.end(JSON.stringify(reply));
+res.end();
+		
 	});
-
 		
 });
 

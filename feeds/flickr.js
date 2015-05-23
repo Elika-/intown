@@ -1,3 +1,5 @@
+moment = require('moment')();
+
 function cleaner(data) {
 	return {
 		"title": data['title'],
@@ -20,7 +22,8 @@ exports.fetch = function (city, http, redis) {
 		res.on('end', function() {
 			data = JSON.parse(body.substring(15, body.length - 1))['items'];
 			for (i = 0; i < data.length; i++) {
-				console.log(data[i]);
+				cleaned = cleaner(data[i]);
+				console.log(cleaned, moment(cleaned['time']));
 			}
 		})
 	}).end();

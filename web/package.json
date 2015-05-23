@@ -9,7 +9,8 @@
     "express": "*",
     "amqplib": "*",
     "nodemon":"*",
-    "when" : "*",
-    "redis" :"*"
+    "when": "*",
+    "redis": "*",
+    "moment": "*"
   }
 }

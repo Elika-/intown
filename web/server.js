@@ -21,6 +21,7 @@ server.listen(app.get('port'), function() {
 
 
 var minutes = 1, the_interval = minutes * 60 * 1000;
+
 fetch_data();
 setInterval(fetch_data, the_interval);
 
@@ -43,10 +44,20 @@ app.get('/:city', function(req,res) {
 		
 });
 
-var fetch_data = function() {
-	twitter.fetch("hamburg", client);
-	flickr.fetch("hamburg", http, client)
+
+
+function fetch_data() {
+
+	client.keys('city-*', function(err, reply) {
+		for(i = 0; i < reply.length; i++) {
+			var city = getPlainName(reply[i]);
+			flickr.fetch(city, http, client);
+			twitter.fetch(city);
+		}
+
+	});
 }
 
-
-
+function getPlainName(key) {
+	return key.substring(5);
+}

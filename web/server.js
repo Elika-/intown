@@ -25,12 +25,11 @@ app.get('/:city', function(req,res) {
 				client.rpush("city-"+queryCity, "");
 				client.expire(queryCity, expireTime);
 				console.log("added " + queryCity );
-				res.end("No data at the moment, stay tuned!");
+				res.end("{}");
 
 			} else {
-				console.log(reply);
 				client.expire("city-"+queryCity, expireTime);
-				res.end(reply.toString())
+				res.end(JSON.stringify{reply.toString()});
 			}
 		});
 		

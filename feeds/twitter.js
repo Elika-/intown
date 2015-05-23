@@ -19,7 +19,7 @@ var error = function (err, response, body) {
 exports.fetch = function(city, redis) {
 	var success = function (data) {
 	var parsed = JSON.parse(data);
-	console.log("twitter fetch");
+	console.log("---> twitter fetch");
 	for(i = 0; i < parsed.statuses.length; i++) {
 			var data = translate(parsed.statuses[i]);
 			var score = moment(data.time).unix();	

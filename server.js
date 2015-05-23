@@ -45,7 +45,7 @@ app.get('/:city', function(req, res) {
 			for(i = 1; i < reply.length; i++) {
 				resp.push(JSON.parse(reply[i]));
 			}
-			res.json(reply);
+			res.json(resp);
 		});
 	}
 });

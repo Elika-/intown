@@ -1,15 +1,13 @@
 
 {
-  "name": "intown-server",
+  "name": "intown-feeds",
   "version": "0.0.1",
   "scripts": {
   "start": "node app"
 },
   "dependencies": {
-    "express": "*",
     "nodemon":"*",
-    "when" : "*",
     "redis" :"*",
-    "twitter-node-client" : "*",
+    "twitter-node-client" : "*"
   }
 }

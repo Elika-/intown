@@ -3,6 +3,9 @@ var http = require('http');
 var io = require("socket.io")();
 var path = require('path');
 var flickr = require('../feeds/flickr');
+var twitter = require('../feeds/twitter');
+
+
 
 var redis = require("redis"),
 client = redis.createClient();
@@ -15,7 +18,12 @@ app.set('port', process.env.PORT || 3000);
 
 server = http.Server(app);
 server.listen(app.get('port'), function() {
-	flickr.fetch("hamburg", http, client)
+
+
+var minutes = 1, the_interval = minutes * 60 * 1000;
+fetch_data();
+setInterval(fetch_data, the_interval);
+
 });
 
 app.get('/:city', function(req,res) {
@@ -34,4 +42,11 @@ app.get('/:city', function(req,res) {
 		});
 		
 });
+
+var fetch_data = function() {
+	twitter.fetch("hamburg", client);
+	flickr.fetch("hamburg", http, client)
+}
+
+
 

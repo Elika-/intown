@@ -43,10 +43,9 @@ app.get('/:city', function(req,res) {
 function fetch_data() {
 	client.keys('city-*', function(err, reply) {
 		for(i = 0; i < reply.length; i++) {
-			var city = getPlainName(reply[i]);
-		//	flickr.fetch(city, http, client);
-		//	twitter.fetch(city)
-
+		var city = getPlainName(reply[i]);
+		flickr.fetch(city, http, client);
+		twitter.fetch(city)
 		bandsInTown.fetch(city,http,client);
 		}
 

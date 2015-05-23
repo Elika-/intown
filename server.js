@@ -2,9 +2,10 @@ var app = require('express')();
 var http = require('http');
 var io = require("socket.io")();
 var path = require('path');
-var flickr = require('../feeds/flickr');
-var twitter = require('../feeds/twitter');
-var bandsInTown = require('../feeds/bandsInTown');
+
+var flickr = require('./feeds/flickr');
+var twitter = require('./feeds/twitter');
+var bandsInTown = require('./feeds/bandsInTown');
 
 
 var redis = require("redis"),

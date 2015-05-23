@@ -15,7 +15,12 @@
   });
 
   function bla(data) {
-    return data;
+    var res = "";
+    var obj = JSON.parse(data);
+    for(i  = 0; i < obj.length; i++) {
+      res += "\n\n" + obj[i];
+    }
+    return res;
   }
 
 

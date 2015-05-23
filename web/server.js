@@ -1,47 +1,43 @@
-var express = require('express'),
-http = require('http'),
-path = require('path'),
-amqp = require('amqplib');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require("socket.io")();
+var path = require('path');
 
-var rabbitMQ = 'amqp://localhost';
+var redis = require("redis"),
+client = redis.createClient();
 
-var app = express();
-  app.set('port', process.env.PORT || 3000);
-  app.use(express.static(path.join(__dirname, 'public')));
+var cities = "__cities__"
+var max = 100;
 
 
 
-http.createServer(app).listen(app.get('port'), function() {
-	console.log("test");
+app.set('port', process.env.PORT || 3000);
+
+
+
+http.listen(app.get('port'), function() {
+
 });
-
-
-
-
 
 app.get('/:city', function(req,res) {
-	connectMQ(req.params.city);
-	res.end("query for: " + req.params.city);
+	var query = req.params.city;
+	if(query != cities) {
+		client.lrange([query,0 ,max], function(err, reply) {
+			if(reply.toString().length === 0) {
+				client.rpush(cities, query);
+				console.log("added " + query + "to missign cities");
+				res.end("No data at the moment, stay tuned!");
+			} else {
+				console.log(reply);
+				res.end(reply.toString())
+			}
+		});
+	}
+
+
+
+	
 });
 
 
-function connectMQ(city) { 
-amqp.connect(rabbitMQ).then(function(conn) {
-  process.once('SIGINT', function() { conn.close(); });
-  return conn.createChannel().then(function(ch) {
-    
-    var ok = ch.assertQueue(city, {durable: false});
-    
-    ok = ok.then(function(_qok) {
-      return ch.consume(city, function(msg) {
-        console.log(" [x] Received '%s'", msg.content.toString());
-      }, {noAck: true});
-    });
-    
-    return ok.then(function(_consumeOk) {
-      console.log(' [*] Waiting for messages. To exit press CTRL+C');
-    });
-  });
-}).then(null, console.warn);
 
-}

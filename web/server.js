@@ -23,6 +23,10 @@ server.listen(app.get('port'), function() {
 //	setInterval(fetch_data, the_interval);
 });
 
+app.get('/', function(req, res) {
+	res.sendFile(__dirname+'/app/index.html');
+});
+
 app.get('/:city', function(req,res) {
 	var queryCity = req.params.city;
 	fetch_single(queryCity);
@@ -32,14 +36,14 @@ app.get('/:city', function(req,res) {
 			resp += reply[i];
 
 		}
-		res.end(resp);
+		res.end(JSON.stringify(reply));
 	});
 
 		
 });
 
 function fetch_single(city) {
-			console.log("fetch data for "+city);
+		console.log("fetch data for "+city);
 		//flickr.fetch(city, http, client);
 		twitter.fetch(city, client)
 		bandsInTown.fetch(city,http,client);

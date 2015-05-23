@@ -1,0 +1,13 @@
+{
+	title
+	text?
+	location {
+		adress?
+		lat / lon?
+	}
+	link?
+	time
+	service
+	user?
+
+}

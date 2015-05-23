@@ -6,13 +6,10 @@ var path = require('path');
 var redis = require("redis"),
 client = redis.createClient();
 
-var cities = "__cities__"
-var max = 100;
-
-
+var expireTime = 60;
+var max = -1;
 
 app.set('port', process.env.PORT || 3000);
-
 
 
 http.listen(app.get('port'), function() {
@@ -20,23 +17,23 @@ http.listen(app.get('port'), function() {
 });
 
 app.get('/:city', function(req,res) {
-	var query = req.params.city;
-	if(query != cities) {
-		client.lrange([query,0 ,max], function(err, reply) {
+	var queryCity = req.params.city;
+
+
+		client.lrange(["data-"+queryCity, 0 ,max], function(err, reply) {
 			if(reply.toString().length === 0) {
-				client.rpush(cities, query);
-				console.log("added " + query + "to missign cities");
+				client.rpush("city-"+queryCity, "");
+				client.expire(queryCity, expireTime);
+				console.log("added " + queryCity );
 				res.end("No data at the moment, stay tuned!");
+
 			} else {
 				console.log(reply);
+				client.expire("city-"+queryCity, expireTime);
 				res.end(reply.toString())
 			}
 		});
-	}
-
-
-
-	
+		
 });
 
 

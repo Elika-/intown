@@ -6,32 +6,33 @@ $(function() {
 
     e.preventDefault();
 
-
-
-var interval_id = window.setInterval("", 9999); // Get a reference to the last
+    var interval_id = window.setInterval("", 9999); // Get a reference to the last
      
-function load() {
-    $.getJSON('/' + city, function(data) {
-      console.log("======");
-      txt ="";
-      $('#content').html('');
-      for(i = 0; i < data.length; i++) {
+    function load() {
+      $.getJSON('/' + city, function(data) {
+        $('#search').hide();
+        $('.jumbotron').hide();
+        $('.navbar').show();
+        $('#content').show();
 
-      $('#content').append("<div>");   
-      $('#content').append("<h4>"+data[i].title+"</h4>");
-    //  $('#content').append("<h4>"+data[i].title+"</h4>");   
-      $('#content').append("<div>");      
-      }
+        txt = "";
+        $('#content').html('');
+        for(i = 0; i < data.length; i++) {
+          var x = data[i];
+          if (x.media != '') {
+            $('#content').append('<div class="col-xs-12"><img src="' + x.media + '" alt="' + x.title + '"></div>');
+          } else {
+            $('#content').append('<div class="col-xs-12"><h4>' + x.title + '</h4></div>');
+          }
+        }
+      });
+    }
 
-    })
-  }
-load();
-                                                // interval +1
-for (var i = 1; i < interval_id; i++)
-        window.clearInterval(i);
+    load();
 
-
-    setInterval( load, 5000);
+    for (var i = 1; i < interval_id; i++)
+      window.clearInterval(i);
+      setInterval(load, 5000);
   });
 
   $('.sources').on('click', function(e) {
@@ -43,5 +44,14 @@ for (var i = 1; i < interval_id; i++)
         btn.addClass('active');
       }
       e.preventDefault();
+  });
+
+  $('.navbar-brand').click(function(e) {
+    $('#search').show();
+    $('.jumbotron').show();
+    $('.navbar').hide();
+    $('#content').hide();
+
+    e.preventDefault();
   });
 });

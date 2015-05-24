@@ -1,24 +1,3 @@
-/*
-var load = function() {
-  console.log("abc");
-  $.get( "http://localhost:3000/hamburg", function( data ) {
-  $( ".result" ).html( bla(data) );
-  });
-
-  function bla(data) {
-    var res = "";
-    var obj = JSON.parse(data);
-    for(i  = 0; i < obj.length; i++) {
-      res += 
-      "<div><h4>"+obj[i].title+"</h4></div>"
-    }
-    return res;
-  };
-};
-$('#sbmt').click(load);
-//$(document).ready( load);
-*/
-
 $(function() {
   console.log("Hello");
   $('form#search').submit(function(e) {

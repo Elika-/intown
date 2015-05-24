@@ -33,6 +33,28 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/app/index.html');
 });
 
+app.get('/static/style.css', function(req, res) {
+	res.sendFile(__dirname + '/app/static/style.css');
+});
+app.get('/static/logo_full.png', function(req, res) {
+	res.sendFile(__dirname + '/app/static/logo_full.png');
+});
+app.get('/static/bandsintown.png', function(req, res) {
+	res.sendFile(__dirname + '/app/static/bandsintown.png');
+});
+app.get('/static/flickr.png', function(req, res) {
+	res.sendFile(__dirname + '/app/static/flickr.png');
+});
+app.get('/static/meetup.png', function(req, res) {
+	res.sendFile(__dirname + '/app/static/meetup.png');
+});
+app.get('/static/twitter.png', function(req, res) {
+	res.sendFile(__dirname + '/app/static/twitter.png');
+});
+app.get('/static/intown.js', function(req, res) {
+	res.sendFile(__dirname + '/app/static/intown.js');
+});
+
 app.get('/:city', function(req, res) {
 	var queryCity = req.params.city;
 	console.log(req.query);

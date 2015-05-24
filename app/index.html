@@ -1,45 +1,53 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>InTown</title>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
- </head>
- <h1>InTown</h1>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
 
-<form method="" id="form" action="/">
+  <body>
+  <div class="container-fixed">
+    <div class="jumbotron text-center">
+      <img src="/static/logo_full.png" alt="Logo" style="width:200px;">
+    </div>
 
-<input id="city" />
-<button type="submit" id="sbmt">Go</button>
+    <form id="search">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="input-group">
+            <input id="city" name="city" type="text" class="form-control input-lg">
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-lg" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
 
+      <div class="row"><div class="col-ms-12">&nbsp;</div></div>
 
-</form>
+      <div class="row">
+        <div class="col-sm-1 col-sm-offset-4">
+          <a href="#" class="btn btn-default btn-lg active sources" role="button" id="bandsintown"></a>
+        </div>
+        <div class="col-sm-1">
+          <a href="#" class="btn btn-default btn-lg active sources" role="button" id="twitter"></a>
+        </div>
+        <div class="col-sm-1">
+          <a href="#" class="btn btn-default btn-lg active sources" role="button" id="meetup"></a>
+        </div>
+        <div class="col-sm-1">
+          <a href="#" class="btn btn-default btn-lg active sources" role="button" id="flickr"></a>
+        </div>
+      </div>
+    </form>
+  </div>
 
- <div class="result"></div>
-
- <script>
-
- var load = function() {
-  console.log("abc");
-  $.get( "http://localhost:3000/hamburg", function( data ) {
-  $( ".result" ).html( bla(data) );
-  });
-
-  function bla(data) {
-    var res = "";
-    var obj = JSON.parse(data);
-    for(i  = 0; i < obj.length; i++) {
-      res += 
-      "<div><h4>"+obj[i].title+"</h4></div>"
-    }
-    return res;
-  };
- };
-
-
-$('#sbmt').click(load);
- //$(document).ready( load);
- </script>
-
- </body>
+  <script type="application/javascript" src="//cdn.jsdelivr.net/zepto/1.1.3/zepto.min.js"></script>
+  <!--script type="application/javascript" src="//cdn.jsdelivr.net/bootstrap/3.3.4/js/bootstrap.min.js"></script-->
+  <script type="application/javascript" src="/static/intown.js"></script>
+  </body>
 </html>

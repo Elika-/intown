@@ -1,0 +1,36 @@
+body {
+	background-color: #FFB582;
+}
+.jumbotron {
+	background-color: #FFB582;
+}
+.container-fixed {
+  margin: 0 auto;
+  max-width: 960px;
+}
+.container-fixed > hr {
+  margin: 30px 0;
+}
+#bandsintown{
+	background-image:url("/static/bandsintown.png");
+	width:64px;
+	height:64px;
+	background-position: -2px 0;
+}
+#twitter{
+	background-image:url("/static/twitter.png");
+	width:64px;
+	height:64px;
+	background-position: -1px 0;
+}
+#meetup{
+	background-image:url("/static/meetup.png");
+	width:64px;
+	height:64px;
+}
+#flickr{
+	background-image:url("/static/flickr.png");
+	width:64px;
+	height:64px;
+	background-position: -1px 0;
+}

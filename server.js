@@ -64,6 +64,8 @@ function filter_service(query, data) {
 		}
 
 	}
+} else {
+	filtered = data;
 }
 return filtered;	
 }

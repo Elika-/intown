@@ -23,13 +23,21 @@ $(function() {
           var x = data[i];
           html = '<div class="col-xs-12 ' + x.service + '">';
           if (x.media != '') {
-            html += '<img src="' + x.media + '" alt="' + x.title + '" class="feed-media">';
+            html += '<div class="feed-media-box"><img src="' + x.media + '" alt="' + x.title + '" class="feed-media"></div>';
           } else {
             html += '<h4>' + x.title + '</h4>';
           }
-          if (x.link != undefined) {
-            html += '<a href="' + x.link + '" class="clear">See more...</a>';
+          html += '<div class="clearfix"></div>';
+          html += '<ul class="feed-meta">';
+          html += '<li>' + moment(x.time).fromNow() + '</li>';
+          if (x.location) {
+            html += '<li><a href="http://maps.google.com/maps?z=12&t=m&q=loc:' + x.location.lat + '+' + x.location.lon + '" target="_blank">Location</a></li>';
           }
+          if (x.link != undefined) {
+            html += '<li><a href="' + x.link + '" class="clearfix" target="_blank">See more...</a></li>'
+          }
+          html += '</ul>'
+
           $('#content').append(html + '</div>');
         }
       });

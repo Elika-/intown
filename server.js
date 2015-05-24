@@ -5,6 +5,7 @@ var path = require('path');
 var flickr = require('./feeds/flickr');
 var twitter = require('./feeds/twitter');
 var bandsInTown = require('./feeds/bandsInTown');
+var meetup = require('./feeds/meetup');
 
 
 var redis = require("redis"),
@@ -25,6 +26,7 @@ server.listen(app.get('port'), function() {
 			client.del(replies, function(err, res) {});
 		}
 	});
+	fetch_single("Hamburg");
 });
 
 app.get('/', function(req, res) {
@@ -45,8 +47,7 @@ app.get('/:city', function(req, res) {
 				chunk = JSON.parse(reply[i]);
 					resp.push(chunk);
 				}
-
-			filtered =	filter_service(req.query.exclude, resp);			
+			filtered =	filter_service(req.query.exclude, resp).reverse();			
 			res.json(filtered);
 		});
 	}
@@ -75,6 +76,7 @@ function fetch_single(city) {
 		flickr.fetch(city, client);
 		twitter.fetch(city, client);
 		bandsInTown.fetch(city, http,  client);
+		meetup.fetch(city, client);
 }
 
 function fetch_data() {

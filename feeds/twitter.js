@@ -32,7 +32,7 @@ exports.fetch = function(city, redis) {
 
 		}
 	 };
-    twitter.getSearch({'q':city,'count': 10}, error, success);
+    twitter.getSearch({'q':city,'count': 15}, error, success);
 }
 
 

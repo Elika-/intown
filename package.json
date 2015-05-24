@@ -11,6 +11,7 @@
     "when": "*",
     "redis": "*",
     "twitter-node-client": "*",
-    "moment": "*"
+    "moment": "*",
+    "meetup-api" : "*"
   }
 }

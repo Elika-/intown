@@ -10,7 +10,9 @@ exports.fetch = function(city, http, redis) {
 			try {
 				var json = JSON.parse(body);
 				for(i = 0; i < body.length; i++) {
+					console.log(json);
 					var data = translate(json[i]);
+					console.log(json[i]);
 					var score = moment(data.time).unix();
 					redis.zadd(["data-"+city, score, JSON.stringify(data)], function(err ,res) {
 						console.log("BID " + res);
@@ -33,7 +35,7 @@ function translate(data) {
 			lon: data.venue.longitude,
 			adress : data.venue.location
 		},
-		time : new Date(),
+		time : data.datetime,
 		service : "BandsInTown",
 		user : "",
 		media :"",

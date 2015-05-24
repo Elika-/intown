@@ -36,7 +36,10 @@ exports.fetch = function (city, redis) {
 			for (i = 0; i < data.length; i++) {
 				// console.log(data[i]);
 				cleaned = cleaner(data[i]);
-				console.log(cleaned, moment(cleaned['time']).unix());
+				var score = moment(cleaned['time']).unix();
+					redis.zadd(["data-"+city, score, JSON.stringify(cleaned)], function(err ,res) {
+						console.log("Flickr " + res);
+					});
 			}
 		})
 	}).end();

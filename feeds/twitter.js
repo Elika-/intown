@@ -19,7 +19,6 @@ var error = function (err, response, body) {
 exports.fetch = function(city, redis) {
 	var success = function (data) {
 	var parsed = JSON.parse(data);
-	console.log("---> twitter fetch");
 	for(i = 0; i < parsed.statuses.length; i++) {
 			var data = translate(parsed.statuses[i]);
 			var score = moment(data.time).unix();	
@@ -38,17 +37,22 @@ exports.fetch = function(city, redis) {
 
 
 function translate(data) {
-	return {
+	var data =  {
 		title : data.text,
-		location : {
-			cord : data.coordinates,
-			geo : data.geo
-		},
 		time : data.created_at,
 		service : "Twitter",
 		user : data.user.screen_name,
 		media :""
 	}
+
+	if(data.coordinates ) {
+		data.location = {
+			lat : data.coordinates.lat,
+			lon : data.coordinates.lon,
+			}
+		};
+
+	return data;		
 }
 
 

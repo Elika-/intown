@@ -19,15 +19,12 @@ app.set('port', process.env.PORT || 3000);
 server = http.Server(app);
 server.listen(app.get('port'), function() {
 	// Clean existing data from Redis
+	console.log("listen");
 	client.keys('*', function(err, replies) {
 		if (!err && replies.length) {
 			client.del(replies, function(err, res) {});
 		}
 	});
-
-	var minutes = 1, the_interval = minutes * 60 * 1000;
-	// fetch_data();
-	// setInterval(fetch_data, the_interval);
 });
 
 app.get('/', function(req, res) {
@@ -54,7 +51,7 @@ function fetch_single(city) {
 		console.log("fetch data for "+city);
 		flickr.fetch(city, client);
 		twitter.fetch(city, client);
-		// bandsInTown.fetch(city, client);
+		bandsInTown.fetch(city, http,  client);
 }
 
 function fetch_data() {

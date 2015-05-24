@@ -2,10 +2,10 @@ var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
     //Get this data from your twitter apps dashboard
     var config = {
-        "consumerKey": "cMWS2TdDswyMV3v1PhPx0I5vB",
-        "consumerSecret": "jLn1kx5GmvqYIuvdstNDcSY3ODbDgBJ0lzqEDFcWrgOxHhCGAb",
-        "accessToken": "313635473-MLzcfi4CsFaEPZ1RxaLsU3A8OgruRL6fAr8nxTL0",
-        "accessTokenSecret": "NBIT1sok4RcuYX9RX5n8SUYo3nz8BJ9yAdJEDeywTE3dR"
+        "consumerKey": "iUvYdR6co8eGHjg9q0olkQ",
+        "consumerSecret": "WvdbJpj49tBfmLJU3bLITsxx90piBjjRtHLguA0MA",
+        "accessToken": "14236464-FdEGhmN3EdlzXTpwfKEJtesupiRkVnMJRxRjKG4ec",
+        "accessTokenSecret": "59qpCrDjGtA19VxDozsDmb1vOZbgD4GvIflBh2cizY"
     }
 
 var twitter = new Twitter(config);

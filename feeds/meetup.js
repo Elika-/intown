@@ -38,7 +38,7 @@ function translate(data) {
 		title : data.name,
 		text : data.description.substring(0, data.description.length < maxSize
 			? data.description.length : maxSize) ,
-		time : new Date(data.time),
+		time : new Date(data.updated),
 		service : "Meetup",
 		user : "",
 		media :"",

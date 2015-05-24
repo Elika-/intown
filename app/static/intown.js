@@ -1,4 +1,6 @@
 $(function() {
+  var interval = null;
+
   console.log("Hello");
   $('form#search').submit(function(e) {
     var city = $('#city').val()
@@ -6,8 +8,8 @@ $(function() {
 
     e.preventDefault();
 
-    var interval_id = window.setInterval("", 9999); // Get a reference to the last
-     
+    // var interval_id = window.setInterval("", 9999); // Get a reference to the last
+
     function load() {
       $.getJSON('/' + city, function(data) {
         $('#search').hide();
@@ -19,20 +21,22 @@ $(function() {
         $('#content').html('');
         for(i = 0; i < data.length; i++) {
           var x = data[i];
+          html = '<div class="col-xs-12 ' + x.service + '">';
           if (x.media != '') {
-            $('#content').append('<div class="col-xs-12"><img src="' + x.media + '" alt="' + x.title + '"></div>');
+            html += '<img src="' + x.media + '" alt="' + x.title + '" class="feed-media">';
           } else {
-            $('#content').append('<div class="col-xs-12"><h4>' + x.title + '</h4></div>');
+            html += '<h4>' + x.title + '</h4>';
           }
+          if (x.link != undefined) {
+            html += '<a href="' + x.link + '" class="clear">See more...</a>';
+          }
+          $('#content').append(html + '</div>');
         }
       });
     }
 
     load();
-
-    for (var i = 1; i < interval_id; i++)
-      window.clearInterval(i);
-      setInterval(load, 5000);
+    interval = setInterval(load, 10000);
   });
 
   $('.sources').on('click', function(e) {
@@ -51,6 +55,7 @@ $(function() {
     $('.jumbotron').show();
     $('.navbar').hide();
     $('#content').hide();
+    clearTimeout(interval);
 
     e.preventDefault();
   });

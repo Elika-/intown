@@ -26,7 +26,7 @@ server.listen(app.get('port'), function() {
 			client.del(replies, function(err, res) {});
 		}
 	});
-	fetch_single("Hamburg");
+	// fetch_single("Hamburg");
 });
 
 app.get('/', function(req, res) {
@@ -55,6 +55,27 @@ app.get('/static/intown.js', function(req, res) {
 	res.sendFile(__dirname + '/app/static/intown.js');
 });
 
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+
 app.get('/:city', function(req, res) {
 	var queryCity = req.params.city;
 	console.log(req.query);
@@ -69,7 +90,7 @@ app.get('/:city', function(req, res) {
 				chunk = JSON.parse(reply[i]);
 					resp.push(chunk);
 				}
-			filtered =	filter_service(req.query.exclude, resp).reverse();			
+			filtered =shuffle(	filter_service(req.query.exclude, resp)	);		
 			res.json(filtered);
 		});
 	}

@@ -49,4 +49,38 @@ body {
 }
 .navbar{
 	display: none;
+	padding-bottom: 32px;
+}
+#content .col-xs-12 {
+	background-color: #FFF;
+	margin: 2px 0;
+	padding-top: 12px;
+	padding-bottom: 48px;
+}
+#content .col-xs-12.flickr{
+	text-align: center;
+	background-image: url("/static/flickr.png");
+	background-repeat: no-repeat;
+	background-position: 98% 98%;
+}
+#content .feed-media{
+	width: 80%;
+}
+
+#content .col-xs-12.Twitter{
+	background-image: url("/static/twitter.png");
+	background-repeat: no-repeat;
+	background-position: 98% 98%;
+}
+#content .col-xs-12.Meetup{
+	background-image: url("/static/meetup.png");
+	background-repeat: no-repeat;
+	background-position: 98% 98%;
+}
+#content .col-xs-12.BandsInTown{
+	background-color: #FFF;
+	text-align: center;
+	background-image: url("/static/bandsintown.png");
+	background-repeat: no-repeat;
+	background-position: 98% 98%;
 }

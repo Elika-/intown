@@ -31,7 +31,7 @@ for (var i = 1; i < interval_id; i++)
         window.clearInterval(i);
 
 
-    setInterval( load, 5000);
+    setInterval( load, 10000);
   });
 
   $('.sources').on('click', function(e) {

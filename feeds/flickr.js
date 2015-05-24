@@ -31,14 +31,13 @@ exports.fetch = function (city, redis) {
 		});
 
 		res.on('end', function() {
-			console.log(JSON.parse(body));
 			var data = JSON.parse(body).photos.photo;
 			for (i = 0; i < data.length; i++) {
 				// console.log(data[i]);
 				cleaned = cleaner(data[i]);
 				var score = moment(cleaned['time']).unix();
 					redis.zadd(["data-"+city, score, JSON.stringify(cleaned)], function(err ,res) {
-						console.log("Flickr " + res);
+					//	console.log("Flickr " + res);
 					});
 			}
 		})

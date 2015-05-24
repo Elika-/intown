@@ -10,12 +10,10 @@ exports.fetch = function(city, http, redis) {
 			try {
 				var json = JSON.parse(body);
 				for(i = 0; i < body.length; i++) {
-					console.log(json);
 					var data = translate(json[i]);
-					console.log(json[i]);
 					var score = moment(data.time).unix();
 					redis.zadd(["data-"+city, score, JSON.stringify(data)], function(err ,res) {
-						console.log("BID " + res);
+						//console.log("BID " + res);
 					});
 
 

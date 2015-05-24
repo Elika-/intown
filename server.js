@@ -33,19 +33,40 @@ app.get('/', function(req, res) {
 
 app.get('/:city', function(req, res) {
 	var queryCity = req.params.city;
+	console.log(req.query);
 	if (queryCity == 'favicon.ico') {
 		res.end();
 	} else {
 		fetch_single(queryCity);
 		var resp = []
 		client.zrange(["data-" + queryCity, 0, -1], function(err, reply) {
+
 			for(i = 1; i < reply.length; i++) {
-				resp.push(JSON.parse(reply[i]));
-			}
-			res.json(resp);
+				chunk = JSON.parse(reply[i]);
+					resp.push(chunk);
+				}
+
+			filtered =	filter_service(req.query.exclude, resp);			
+			res.json(filtered);
 		});
 	}
 });
+
+function filter_service(query, data) {
+	filtered = [];
+	if(query) {
+	var excl =  query.split(",").map(function(val) {return val.toUpperCase()});
+
+	for(i = 0; i < data.length; i++) {
+		var serv = data[i].service.toUpperCase();
+		if(excl.indexOf(serv) == -1) {
+			filtered.push(data[i]);
+		}
+
+	}
+}
+return filtered;	
+}
 
 function fetch_single(city) {
 		console.log("fetch data for "+city);
@@ -55,7 +76,7 @@ function fetch_single(city) {
 }
 
 function fetch_data() {
-	console.log("fetch_data");
+
 	client.keys('data-*', function(err, reply) {
 		for(i = 0; i < reply.length; i++) {
 			var city = getPlainName(reply[i]);

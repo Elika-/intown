@@ -27,7 +27,7 @@ exports.fetch = function(city, redis) {
 				if(err != null) {
 					console.log("err " + err);
 				}
-				console.log("added:" + res);
+				//console.log("added:" + res);
 			});
 
 		}

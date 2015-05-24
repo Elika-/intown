@@ -12,24 +12,24 @@ body {
   margin: 30px 0;
 }
 #bandsintown{
-	background-image:url("/static/bandsintown.png");
+	background-image:url("bandsintown.png");
 	width:64px;
 	height:64px;
 	background-position: -2px 0;
 }
 #twitter{
-	background-image:url("/static/twitter.png");
+	background-image:url("twitter.png");
 	width:64px;
 	height:64px;
 	background-position: -1px 0;
 }
 #meetup{
-	background-image:url("/static/meetup.png");
+	background-image:url("meetup.png");
 	width:64px;
 	height:64px;
 }
 #flickr{
-	background-image:url("/static/flickr.png");
+	background-image:url("flickr.png");
 	width:64px;
 	height:64px;
 	background-position: -1px 0;

@@ -7,7 +7,16 @@ $(function() {
     e.preventDefault();
 
     $.getJSON('/' + city, function(data) {
-      console.log(data);
+      console.log(data.length);
+      txt ="";
+      for(i = 0; i < data.length; i++) {
+
+      $('#content').append("<div>");   
+      $('#content').append("<h4>"+data[i].title+"</h4>");
+      $('#content').append("<h4>"+data[i].title+"</h4>");   
+      $('#content').append("<div>");      
+      }
+
     })
   });
 

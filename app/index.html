@@ -6,10 +6,21 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
  </head>
  <h1>InTown</h1>
+
+<form method="" id="form" action="/">
+
+<input id="city" />
+<button type="submit" id="sbmt">Go</button>
+
+
+</form>
+
  <div class="result"></div>
 
  <script>
- $(document).ready( function() {
+
+ var load = function() {
+  console.log("abc");
   $.get( "http://localhost:3000/hamburg", function( data ) {
   $( ".result" ).html( bla(data) );
   });
@@ -17,17 +28,17 @@
   function bla(data) {
     var res = "";
     var obj = JSON.parse(data);
-    for(i  = 0; i < 1; i++) {
-console.log(obj[i]);
+    for(i  = 0; i < obj.length; i++) {
       res += 
-      "<div>"+obj+"</div>";
-
+      "<div><h4>"+obj[i].title+"</h4></div>"
     }
     return res;
-  }
+  };
+ };
 
 
- })
+$('#sbmt').click(load);
+ //$(document).ready( load);
  </script>
 
  </body>

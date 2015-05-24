@@ -7,7 +7,10 @@ $(function() {
     e.preventDefault();
 
 
-    setInterval( function() {
+
+var interval_id = window.setInterval("", 9999); // Get a reference to the last
+     
+function load() {
     $.getJSON('/' + city, function(data) {
       console.log("======");
       txt ="";
@@ -21,7 +24,14 @@ $(function() {
       }
 
     })
-  }, 10000);
+  }
+load();
+                                                // interval +1
+for (var i = 1; i < interval_id; i++)
+        window.clearInterval(i);
+
+
+    setInterval( load, 5000);
   });
 
   $('.sources').on('click', function(e) {

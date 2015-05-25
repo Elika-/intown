@@ -1,13 +1,6 @@
 var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
-    //Get this data from your twitter apps dashboard
-    var config = {
-        "consumerKey": "iUvYdR6co8eGHjg9q0olkQ",
-        "consumerSecret": "WvdbJpj49tBfmLJU3bLITsxx90piBjjRtHLguA0MA",
-        "accessToken": "14236464-FdEGhmN3EdlzXTpwfKEJtesupiRkVnMJRxRjKG4ec",
-        "accessTokenSecret": "59qpCrDjGtA19VxDozsDmb1vOZbgD4GvIflBh2cizY"
-    }
-
+var config = require('config/development.js');
 var twitter = new Twitter(config);
 
 var error = function (err, response, body) {

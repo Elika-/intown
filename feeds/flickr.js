@@ -1,5 +1,6 @@
 moment = require('moment');
 https = require('https');
+config = require('config/development');
 
 function cleaner(data) {
 	return {
@@ -21,7 +22,7 @@ function image_url(data) {
 }
 
 exports.fetch = function (city, redis) {
-	https.get("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=98e130ea926d426413730b9018fcbe65&" +
+	https.get("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + config.flickr.apiKey +
 		"format=json&nojsoncallback=1&per_page=10&extras=date_taken,owner_name,url_m&min_taken_date=" + moment().subtract(1, 'days').unix() +
 		"&text=" + city, function(res) {
 

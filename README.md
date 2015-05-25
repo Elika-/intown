@@ -1,2 +1,3 @@
 # intown
-Our HackathonHH submission
+Our HackathonHH submission.
+To get this running, add your own API keys.

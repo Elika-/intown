@@ -3,6 +3,7 @@ var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
 var config = require('../config/development.js').twitter;
 var twitter = new Twitter(config);
+var utils = require('utils');
 var lastCall = null;
 
 var error = function (err, response, body) {
@@ -52,7 +53,7 @@ function callApi(now) {
 function translate(data) {
 	var data =  {
 		title : data.text,
-		time : data.created_at,
+		time: utils.randomize(data.created_at),
 		service : "Twitter",
 		user : data.user.screen_name,
 		media :""

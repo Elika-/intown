@@ -1,13 +1,14 @@
 moment = require('moment');
 https = require('https');
 config = require('../config/development').flickr;
+var utils = require('utils');
 
 function cleaner(data) {
 	return {
 		"title": data['title'],
 		"link": "https://www.flickr.com/photos/" + data['owner'] + "/" + data['id'],
 		"media": data['url_m'],
-		"time": data['datetaken'],
+		"time": utils.randomize(data['datetaken']),
 		"service": "flickr",
 		"user": data['ownername']
 	}

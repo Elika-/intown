@@ -1,9 +1,9 @@
-var MINIMAL_DIFF = 15;
+var MINIMAL_DIFF_MIN = 5;
 var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
 var config = require('../config/development.js').twitter;
 var twitter = new Twitter(config);
-var utils = require('utils');
+var utils = require('./utils');
 var lastCall = null;
 
 var error = function (err, response, body) {
@@ -20,7 +20,7 @@ exports.fetch = function(city, redis) {
 	var parsed = JSON.parse(data);
 	for(i = 0; i < parsed.statuses.length; i++) {
 			var data = translate(parsed.statuses[i]);
-			var score = moment(data.time).unix();	
+		var score = moment(parsed.created_at).unix();
 
 			redis.zadd(["data-"+city, score, JSON.stringify(data)], function(err ,res) {
 				if(err != null) {
@@ -35,18 +35,17 @@ exports.fetch = function(city, redis) {
 	if (callApi(new Date())) {
 		console.log("fetching twitter data " + city);
 		console.log(lastCall);
-		twitter.getSearch({'q': city, 'count': 100}, error, success);
+		twitter.getSearch({'q': city, 'count': 15}, error, success);
 	}
 }
 
 // to ensure we do not poll twitter to much, call it only every 15 mins
 function callApi(now) {
 	var diff = moment.utc(moment(now).diff(moment(lastCall))).minute();
-	var doCall = lastCall == null || diff >= MINIMAL_DIFF;
+	var doCall = lastCall == null || diff >= MINIMAL_DIFF_MIN;
 	if (doCall) {
 		lastCall = new Date();
 	}
-	console.log("--->" + diff + "   " + lastCall);
 	return doCall;
 }
 

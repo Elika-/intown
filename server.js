@@ -56,24 +56,6 @@ app.get('/static/intown.js', function(req, res) {
 });
 
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex ;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
 
 
 app.get('/:city', function(req, res) {
@@ -89,11 +71,23 @@ app.get('/:city', function(req, res) {
 				chunk = JSON.parse(reply[i]);
 					resp.push(chunk);
 				}
-			filtered =shuffle(	filter_service(req.query.exclude, resp)	);		
+			filtered = resp.sort(sort);
 			res.json(filtered);
 		});
 	}
 });
+
+
+var sort = function sortStream(a, b) {
+	var result = 0;
+	if (moment(a.time).isBefore(moment(b.time))) {
+		result = 1;
+		console.log("before");
+	} else if (moment(a.time).isAfter(moment(b.time))) {
+		result = -1;
+	}
+	return result;
+}
 
 function filter_service(query, data) {
 	filtered = [];

@@ -85,7 +85,6 @@ app.get('/:city', function(req, res) {
 		fetch_single(queryCity);
 		var resp = []
 		client.zrange(["data-" + queryCity, 0, -1], function(err, reply) {
-
 			for(i = 1; i < reply.length; i++) {
 				chunk = JSON.parse(reply[i]);
 					resp.push(chunk);
@@ -115,11 +114,10 @@ return filtered;
 }
 
 function fetch_single(city) {
-		console.log("fetch data for "+city);
-		flickr.fetch(city, client);
-		twitter.fetch(city, client);
-		bandsInTown.fetch(city, http,  client);
-		meetup.fetch(city, client);
+	flickr.fetch(city, client);
+	twitter.fetch(city, client);
+	bandsInTown.fetch(city, http, client);
+	meetup.fetch(city, client);
 }
 
 function fetch_data() {

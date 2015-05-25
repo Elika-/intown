@@ -1,10 +1,15 @@
+var MINIMAL_DIFF = 15;
 var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
-var config = require('../config/development.js');
+var config = require('../config/development.js').twitter;
 var twitter = new Twitter(config);
+var lastCall = null;
 
 var error = function (err, response, body) {
-	console.log('ERROR [%s]', err);
+	if (err) {
+		console.log(err)
+	}
+	;
 };
 
 
@@ -20,14 +25,29 @@ exports.fetch = function(city, redis) {
 				if(err != null) {
 					console.log("err " + err);
 				}
-				//console.log("added:" + res);
 			});
 
 		}
 	 };
-    twitter.getSearch({'q':city,'count': 15}, error, success);
+
+
+	if (callApi(new Date())) {
+		console.log("fetching twitter data " + city);
+		console.log(lastCall);
+		twitter.getSearch({'q': city, 'count': 100}, error, success);
+	}
 }
 
+// to ensure we do not poll twitter to much, call it only every 15 mins
+function callApi(now) {
+	var diff = moment.utc(moment(now).diff(moment(lastCall))).minute();
+	var doCall = lastCall == null || diff >= MINIMAL_DIFF;
+	if (doCall) {
+		lastCall = new Date();
+	}
+	console.log("--->" + diff + "   " + lastCall);
+	return doCall;
+}
 
 function translate(data) {
 	var data =  {
@@ -41,7 +61,7 @@ function translate(data) {
 	if(data.coordinates ) {
 		data.location = {
 			lat : data.coordinates.lat,
-			lon : data.coordinates.lon,
+			lon: data.coordinates.lon
 			}
 		};
 

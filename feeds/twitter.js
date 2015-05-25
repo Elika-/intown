@@ -1,6 +1,6 @@
 var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
-var config = require('config/development.js');
+var config = require('../config/development.js');
 var twitter = new Twitter(config);
 
 var error = function (err, response, body) {

@@ -1,5 +1,5 @@
 var https = require('https');
-var config = require('config/development');
+var config = require('../config/development');
 
 exports.fetch = function(city, redis) {
 	https.get('https://api.meetup.com/2/open_events?and_text=False&country=de&offset=0&city=Hamburg&format=json&limited_events=False&photo-host=public&page=20&radius=25.0&desc=False&status=upcoming&sig_id=187720534&sig=' + config.meetup.apiKey, function (res) {

@@ -1,6 +1,6 @@
 moment = require('moment');
 https = require('https');
-config = require('config/development');
+config = require('../config/development');
 
 function cleaner(data) {
 	return {

@@ -44,7 +44,7 @@ var sort = function sortStream(a, b) {
 function fetchFor(city) {
     flickr.fetch(city, client);
     twitter.fetch(city, client);
-    bandsintown.fetch(city, client);
+    //   bandsintown.fetch(city, client);
     meetup.fetch(city, client);
 }
 

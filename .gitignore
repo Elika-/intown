@@ -27,3 +27,5 @@ build/Release
 node_modules
 
 config/development.js
+
+.idea

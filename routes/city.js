@@ -2,10 +2,8 @@ var express = require('express');
 var router = express.Router();
 var redis = require('redis');
 var client = redis.createClient();
-var flickr = require('../feeds/flickr');
-var meetup = require('../feeds/meetup');
-var twitter = require('../feeds/twitter');
-var bandsintown = require('../feeds/bandsintown');
+var moment = require('moment');
+var crawler = require('../feeds/crawler.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -14,17 +12,23 @@ router.get('/', function (req, res, next) {
 
 router.get('/:city', function (req, res) {
     var queryCity = req.params.city;
-    console.log(req.query);
     if (queryCity == 'favicon.ico') {
         res.end();
     } else {
-        fetchFor(queryCity);
+        crawler.crawl(queryCity);
         var resp = []
         client.zrange(['data-' + queryCity, 0, -1], function (err, reply) {
             for (i = 1; i < reply.length; i++) {
-                var chunk = JSON.parse(reply[i]);
-                resp.push(chunk);
+                var chunk;
+                try {
+                    chunk = JSON.parse(reply[i]);
+                    resp.push(chunk);
+                } catch (e) {
+                    console.log(e);
+                    console.log(reply[i]);
+                }
             }
+            res.type('json');
             res.json(resp.sort(sort));
         });
     }
@@ -40,12 +44,5 @@ var sort = function sortStream(a, b) {
     return result;
 }
 
-
-function fetchFor(city) {
-    flickr.fetch(city, client);
-    twitter.fetch(city, client);
-    //   bandsintown.fetch(city, client);
-    meetup.fetch(city, client);
-}
 
 module.exports = router;

@@ -1,0 +1,16 @@
+/*{
+  short: "Short text",
+  // needed
+  text: "Longer text",
+  location
+{
+adress: "Textual adress representation",
+lat: 53,
+lon: 7
+}
+link: "http://intown.space",
+time: new Date(), // needed
+service: "Twitter", // needed
+user: "Foo bar",
+media "abc.gif"
+}*/

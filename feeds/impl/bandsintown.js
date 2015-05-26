@@ -1,7 +1,7 @@
 var moment = require('moment');
 var http = require('http');
 
-exports.fetch = function (city, http, redis) {
+exports.fetch = function (city, redis) {
     http.get('http://api.bandsintown.com/events/on_sale_soon.json?location=Hamburg&app_id=YOUR_APP_ID231', function (res) {
         body = '';
         console.log(res);
@@ -25,7 +25,7 @@ exports.fetch = function (city, http, redis) {
             }
         })
     }).end();
-}
+};
 
 function translate(data) {
     return {

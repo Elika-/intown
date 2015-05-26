@@ -1,9 +1,9 @@
-var MINIMAL_DIFF_MIN = 5;
 var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
-var config = require('../config/development.js').twitter;
+var config = require('../../config/development.js').twitter;
 var twitter = new Twitter(config);
 var utils = require('./utils');
+var DataObject = require('../DataObject');
 var lastCall = null;
 
 var error = function (err, response, body) {
@@ -17,8 +17,9 @@ exports.fetch = function (city, redis) {
     var success = function (data) {
         var parsed = JSON.parse(data);
         for (i = 0; i < parsed.statuses.length; i++) {
-            var data = translate(parsed.statuses[i]);
-            var score = moment(parsed.created_at).unix();
+            var data = wrapData(parsed.statuses[i]);
+
+            var score = moment(parsed.time).unix();
 
             redis.zadd(['data-' + city, score, JSON.stringify(data)], function (err, res) {
                 if (err != null) {
@@ -29,10 +30,7 @@ exports.fetch = function (city, redis) {
         }
     };
 
-
     if (callApi(new Date())) {
-        console.log('fetching twitter data ' + city);
-        console.log(lastCall);
         twitter.getSearch({q: city, count: 5}, error, success);
     }
 }
@@ -40,29 +38,25 @@ exports.fetch = function (city, redis) {
 // to ensure we do not poll twitter to much, call it only every 15 mins
 function callApi(now) {
     var diff = moment.utc(moment(now).diff(moment(lastCall))).minute();
-    var doCall = lastCall == null || diff >= MINIMAL_DIFF_MIN;
+    var doCall = lastCall == null || diff >= config.minDiffInMin;
     if (doCall) {
         lastCall = new Date();
     }
     return doCall;
 }
 
-function translate(data) {
-    var data = {
-        title: data.text,
-        time: utils.randomize(data.created_at),
-        service: 'Twitter',
-        user: data.user.screen_name,
-        media: ''
-    }
 
-    if (data.coordinates) {
-        data.location = {
-            lat: data.coordinates.lat,
-            lon: data.coordinates.lon
-        }
-    }
-    return data;
+function wrapData(data) {
+
+    var obj = new DataObject(data.text, 'Twitter', utils.randomize(data.created_at)).withUser(data.user.screen_name);
+    /*  if (false && data.coordinates != null) {
+     obj.withLocation({
+     lat: data.coordinates.latitude,
+     lon: data.coordinates.lon
+     })
+     }*/
+    console.log(obj);
+    return obj;
 }
 
 

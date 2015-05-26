@@ -1,27 +1,27 @@
-
 {
-  "name": "intown-server",
-  "version": "0.0.1",
+  "name": "expr",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-  "start": "node app"
-},
+    "start": "node ./bin/www"
+  },
   "dependencies": {
+    "debug": "~2.1.1",
+    "express": "~4.11.1",
+    "serve-favicon": "~2.2.0",
+    "jscs": "*",
     "express": "*",
-    "nodemon":"*",
+    "nodemon": "*",
     "when": "*",
     "redis": "*",
     "twitter-node-client": "*",
     "moment": "*",
-    "meetup-api" : "*"
+    "meetup-api": "*",
+    "morgan": "*",
+    "jade": "*"
   },
   "jscsConfig": {
     "disallowSpacesInNamedFunctionExpression": {
-      "beforeOpeningRoundBrace": true
-    },
-    "disallowSpacesInFunctionExpression": {
-      "beforeOpeningRoundBrace": true
-    },
-    "disallowSpacesInAnonymousFunctionExpression": {
       "beforeOpeningRoundBrace": true
     },
     "disallowSpacesInFunctionDeclaration": {
@@ -42,7 +42,6 @@
     "disallowTrailingComma": true,
     "disallowYodaConditions": true,
     "disallowKeywords": ["with"],
-    "disallowMultipleLineBreaks": true,
     "disallowMultipleVarDecl": true,
     "requireSpaceBeforeBlockStatements": true,
     "requireParenthesesAroundIIFE": true,
@@ -76,7 +75,6 @@
     "requirePaddingNewLinesBeforeLineComments": {
       "allExcept": "firstAfterCurly"
     },
-    "requirePaddingNewLinesAfterBlocks": true,
     "safeContextKeyword": "_this",
     "validateLineBreaks": "LF",
     "validateQuoteMarks": "'"

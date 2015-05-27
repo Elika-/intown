@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var routes = require('./routes/index');
 var city = require('./routes/city');
+var autocomplete = require('./routes/autocomplete.js');
 
 var app = express();
 
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/city', city);
+app.use('/autocomplete', autocomplete);
 
 
 // catch 404 and forward to error handler

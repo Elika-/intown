@@ -1,5 +1,5 @@
 var https = require('https');
-var config = require('../../config/development.js').meetup;
+var config = require('../../../config/development.js').meetup;
 var DataObject = require('../DataObject');
 var S = require('string');
 
@@ -10,8 +10,6 @@ exports.fetch = function (city, redis) {
         cityPar: city,
         apiKey: config.apiKey
     }).s
-
-    console.log(url);
     https.get(url, function (res) {
         var body = '';
         res.on('data', function (chunk) {
@@ -34,7 +32,6 @@ exports.fetch = function (city, redis) {
             } catch (e) {
                 console.log(e);
             }
-            ;
         })
     }).end();
 }

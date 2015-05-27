@@ -1,13 +1,27 @@
 $(function () {
     var interval = null;
 
+    $('#city').on('keyup', function () {
+        var input = $('#city').val();
+        if (input.length > 3) {
+            $('#citylist').html('');
+            $.getJSON('/autocomplete/' + input, function (e) {
+                for (var i = 0; i < e.length; i++) {
+                    var html = '<option value ="' + e[i] + '" />'
+                    $('#citylist').append(html);
+                }
+            })
+        }
+    })
+
     $('form#search').submit(function (e) {
         var city = $('#city').val();
+
         e.preventDefault();
         // var interval_id = window.setInterval("", 9999); // Get a reference to the last
 
         function load() {
-            $.getJSON('/city/' + city, function (data) {
+            $.getJSON('/city/' + city.split('(')[0], function (data) {
                 $('#search').hide();
                 $('.jumbotron').hide();
                 $('.navbar').show();

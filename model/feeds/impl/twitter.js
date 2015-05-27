@@ -1,6 +1,6 @@
 var Twitter = require('twitter-node-client').Twitter;
 var moment = require('moment');
-var config = require('../../config/development.js').twitter;
+var config = require('../../../config/development.js').twitter;
 var twitter = new Twitter(config);
 var utils = require('./utils');
 var DataObject = require('../DataObject');
@@ -49,12 +49,12 @@ function callApi(now) {
 function wrapData(data) {
 
     var obj = new DataObject(data.text, 'Twitter', utils.randomize(data.created_at)).withUser(data.user.screen_name);
-    /*  if (false && data.coordinates != null) {
-     obj.withLocation({
-     lat: data.coordinates.latitude,
-     lon: data.coordinates.lon
-     })
-     }*/
+    if (false && data.coordinates != null) {
+        obj.withLocation({
+            lat: data.coordinates.latitude,
+            lon: data.coordinates.lon
+        })
+    }
     console.log(obj);
     return obj;
 }

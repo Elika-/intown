@@ -3,7 +3,7 @@ var router = express.Router();
 var redis = require('redis');
 var client = redis.createClient();
 var moment = require('moment');
-var crawler = require('../feeds/crawler.js');
+var crawler = require('../model/feeds/crawler.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -33,6 +33,7 @@ router.get('/:city', function (req, res) {
         });
     }
 });
+
 
 var sort = function sortStream(a, b) {
     var result = 0;

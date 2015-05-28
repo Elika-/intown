@@ -25,9 +25,9 @@ $(function () {
                 $('#search').hide();
                 $('.jumbotron').hide();
                 $('.navbar').show();
-                $('#content').show();
+                $('#results').show();
                 txt = '';
-                $('#content').html('');
+                $('#results').html('');
                 for (i = 0; i < data.length; i++) {
                     var x = data[i];
                     console.log(x);
@@ -54,7 +54,7 @@ $(function () {
                     }
                     html += '</ul>'
 
-                    $('#content').append(html + '</div>');
+                    $('#results').append(html + '</div>');
                 }
             });
         }
@@ -78,7 +78,7 @@ $(function () {
         $('#search').show();
         $('.jumbotron').show();
         $('.navbar').hide();
-        $('#content').hide();
+        $('#results').hide();
         clearTimeout(interval);
 
         e.preventDefault();

@@ -5,8 +5,9 @@
     <title>InTown</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/flexboxgrid/6.2.0/flexboxgrid.min.css">
-    <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/flexboxgrid/6.2.0/flexboxgrid.min.css">
+    <link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Roboto:500'>
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
   </head>
 
   <body>
@@ -20,18 +21,19 @@
       </div>
 
       <form id="search">
-        <div class="row center-sm">
-          <div class="col-xs-12 col-sm-9">
+        <div class="row center-xs center-sm">
+          <div class="col-xs-9 col-sm-6">
             <div class="box">
-              <input id="city" name="city" type="text" class="input-lg" list="citylist" placeholder="Where are you?">
+              <input id="city" name="city" type="text" class="form-control input-lg" list="citylist" placeholder="Your city/town">
               <datalist id="citylist"></datalist>
             </div>
           </div>
         </div>
+        <div class="row">&nbsp;</div>
         <div class="row center-xs center-sm">
-          <div class="col-xs-6 col-sm-3">
+          <div class="col-xs-9 col-sm-6">
             <div class="box">
-              <button type="submit" class="input-lg">Show me!</button>
+              <button type="submit" class="btn-lg">What's happening?</button>
             </div>
           </div>
         </div>
